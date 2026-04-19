@@ -161,19 +161,20 @@ _Add your project screenshots here_
 ## Installation Steps
 
 1. Clone the repository
-
-```bash
 git clone https://github.com/yourusername/project-name.git
 
-Open in IDE
-Configure MySQL Database
-Run Spring Boot Application
-Open browser and access:
+2. Open in IDE
+
+3. Configure MySQL Database
+
+4. Run Spring Boot Application
+5. Open browser and access:
 http://localhost:8080
+
 Developed By
 
-Sarthak Kalyani
-B.Tech CSE Final Year Major Project
+Sarthak Kalyani 
+B.Tech CSE
 
 License
 
