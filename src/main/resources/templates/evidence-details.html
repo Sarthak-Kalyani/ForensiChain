@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<title>Evidence Details</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0px 0px 10px gray;
+width:700px;
+margin:auto;
+}
+
+h2{
+text-align:center;
+}
+
+.row{
+margin:15px;
+font-size:20px;
+}
+
+.hash{
+word-break:break-all;
+color:green;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Evidence Details</h2>
+
+<div class="row">
+
+<b>Evidence ID :</b>
+
+<span th:text="${evidence.id}"></span>
+
+</div>
+
+<div class="row">
+
+<b>File Name :</b>
+
+<span th:text="${evidence.fileName}"></span>
+
+</div>
+
+<div class="row">
+
+<b>Owner :</b>
+
+User
+
+<span th:text="${evidence.userId}"></span>
+
+</div>
+
+<div class="row">
+
+<b>Uploaded :</b>
+
+<span th:text="${evidence.uploadedAt}"></span>
+
+</div>
+
+<div class="row">
+
+<b>SHA-256 Hash :</b>
+
+<div class="hash"
+th:text="${evidence.hashValue}">
+</div>
+
+</div>
+
+<div class="row">
+
+<b>Status :</b>
+
+🟢 VALID
+
+</div>
+
+<br>
+
+<a href="/dashboard">
+
+⬅ Back to Dashboard
+
+</a>
+
+</div>
+
+</body>
+
+</html>

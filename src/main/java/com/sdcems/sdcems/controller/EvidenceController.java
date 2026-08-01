@@ -26,7 +26,7 @@ public class EvidenceController {
     // -------- UPLOAD FILE --------
     @PostMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file,
-                     @RequestParam("userId") int userId) {
+                     @RequestParam("userId") int userId, @RequestParam("caseId") int caseId) {
     try {
         File uploadDir = new File(System.getProperty("user.dir") + "/uploads");
         if (!uploadDir.exists()) uploadDir.mkdir();
@@ -37,6 +37,7 @@ public class EvidenceController {
         String hash = HashService.generateFileHash(new FileInputStream(savedFile));
 
         Evidence evidence = new Evidence();
+        evidence.setCaseId(caseId);
         evidence.setFileName(savedFile.getName());
         evidence.setHashValue(hash);
         evidence.setUserId(userId);

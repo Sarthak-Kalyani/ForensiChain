@@ -8,25 +8,68 @@ public class Evidence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String fileName;
+
+    @Column(length = 1000)
     private String hashValue;
-    private int userId;
+
+    private Integer userId;
+
+    // ⭐ NEW
+    private Integer caseId;
+
     private LocalDateTime uploadedAt = LocalDateTime.now();
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getFileName() { return fileName; }
-    public void setFileName(String fileName) { this.fileName = fileName; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getHashValue() { return hashValue; }
-    public void setHashValue(String hashValue) { this.hashValue = hashValue; }
+    public String getFileName() {
+        return fileName;
+    }
 
-    public LocalDateTime getUploadedAt() { return uploadedAt; }
-    public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
+    public String getHashValue() {
+        return hashValue;
+    }
+
+    public void setHashValue(String hashValue) {
+        this.hashValue = hashValue;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    // ⭐ NEW
+
+    public Integer getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(Integer caseId) {
+        this.caseId = caseId;
+    }
+
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public void setUploadedAt(LocalDateTime uploadedAt) {
+        this.uploadedAt = uploadedAt;
+    }
+
 }
