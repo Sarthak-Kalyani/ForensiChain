@@ -17,10 +17,29 @@ public class Evidence {
 
     private Integer userId;
 
-    // ⭐ NEW
     private Integer caseId;
 
+    // ===========================
+    // Metadata
+    // ===========================
+
+    private Long fileSize;
+
+    private String fileExtension;
+
+    private String contentType;
+
+    // ===========================
+    // Evidence Status
+    // ===========================
+
+    private String status = "ACTIVE";
+
     private LocalDateTime uploadedAt = LocalDateTime.now();
+
+    // ===========================
+    // Getters & Setters
+    // ===========================
 
     public Integer getId() {
         return id;
@@ -54,14 +73,44 @@ public class Evidence {
         this.userId = userId;
     }
 
-    // ⭐ NEW
-
     public Integer getCaseId() {
         return caseId;
     }
 
     public void setCaseId(Integer caseId) {
         this.caseId = caseId;
+    }
+
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDateTime getUploadedAt() {

@@ -87,14 +87,14 @@ public class InvestigationCaseController {
         model.addAttribute("case", investigationCase);
 
         model.addAttribute(
-                "evidenceList",
-                evidenceRepo.findByCaseId(id)
-        );
+        "evidenceList",
+        evidenceRepo.findByCaseIdAndStatus(id, "ACTIVE")
+);
 
-        model.addAttribute(
-                "totalEvidence",
-                evidenceRepo.findByCaseId(id).size()
-        );
+model.addAttribute(
+        "totalEvidence",
+        evidenceRepo.findByCaseIdAndStatus(id, "ACTIVE").size()
+);
 
         return "case-details";
     }

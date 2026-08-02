@@ -9,4 +9,7 @@ public interface EvidenceRepository extends JpaRepository<Evidence, Integer> {
 
     List<Evidence> findByCaseId(Integer caseId);
 
+    // ⭐ Only active evidence
+    List<Evidence> findByCaseIdAndStatus(Integer caseId, String status);
+
 }
