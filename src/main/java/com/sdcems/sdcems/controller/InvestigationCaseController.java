@@ -1,102 +1,64 @@
 package com.sdcems.sdcems.controller;
 
 import com.sdcems.sdcems.model.InvestigationCase;
-import com.sdcems.sdcems.repository.EvidenceRepository;
 import com.sdcems.sdcems.repository.InvestigationCaseRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/cases")
 public class InvestigationCaseController {
 
     private final InvestigationCaseRepository repo;
-    private final EvidenceRepository evidenceRepo;
 
-    public InvestigationCaseController(
-            InvestigationCaseRepository repo,
-            EvidenceRepository evidenceRepo) {
-
+    public InvestigationCaseController(InvestigationCaseRepository repo) {
         this.repo = repo;
-        this.evidenceRepo = evidenceRepo;
     }
 
-    // ===========================
-    // SHOW ALL CASES
-    // ===========================
+    // ==========================================
+    // CREATE CASE - REST API
+    // ==========================================
 
-    @GetMapping
-    public String allCases(Model model) {
+    @PostMapping("/create")
+    public InvestigationCase createCase(
+            @RequestBody InvestigationCase investigationCase) {
 
-        model.addAttribute("cases", repo.findAll());
+        investigationCase.setCaseNumber(
+                "CASE-" + System.currentTimeMillis()
+        );
 
-        return "cases";
-    }
+        if (investigationCase.getStatus() == null
+                || investigationCase.getStatus().isBlank()) {
 
-    // ===========================
-    // CREATE CASE PAGE
-    // ===========================
-
-    @GetMapping("/new")
-    public String newCase(Model model) {
-
-        model.addAttribute("caseObj", new InvestigationCase());
-
-        return "create-case";
-    }
-
-    // ===========================
-    // SAVE CASE
-    // ===========================
-
-    @PostMapping("/save")
-    public String saveCase(
-            @ModelAttribute("caseObj") InvestigationCase c) {
-
-        if (c.getCaseNumber() == null || c.getCaseNumber().isBlank()) {
-
-            c.setCaseNumber("CASE-" + System.currentTimeMillis());
-
+            investigationCase.setStatus("OPEN");
         }
 
-        if (c.getStatus() == null || c.getStatus().isBlank()) {
+        if (investigationCase.getPriority() == null
+                || investigationCase.getPriority().isBlank()) {
 
-            c.setStatus("OPEN");
-
+            investigationCase.setPriority("MEDIUM");
         }
 
-        repo.save(c);
-
-        return "redirect:/cases";
-
+        return repo.save(investigationCase);
     }
 
-    // ===========================
-    // CASE DETAILS
-    // ===========================
+    // ==========================================
+    // GET ALL CASES - REST API
+    // ==========================================
+    //
+    // NOTE:
+    // The browser UI /cases route is handled by
+    // PageController.
+    //
+    // Therefore this API uses:
+    // GET /cases/api
+    //
+    // ==========================================
 
-    @GetMapping("/{id}")
-    public String caseDetails(
-            @PathVariable Integer id,
-            Model model) {
-
-        InvestigationCase investigationCase =
-                repo.findById(id).orElseThrow();
-
-        model.addAttribute("case", investigationCase);
-
-        model.addAttribute(
-        "evidenceList",
-        evidenceRepo.findByCaseIdAndStatus(id, "ACTIVE")
-);
-
-model.addAttribute(
-        "totalEvidence",
-        evidenceRepo.findByCaseIdAndStatus(id, "ACTIVE").size()
-);
-
-        return "case-details";
+    @GetMapping("/api")
+    public List<InvestigationCase> getAllCases() {
+        return repo.findAll();
     }
-
 }

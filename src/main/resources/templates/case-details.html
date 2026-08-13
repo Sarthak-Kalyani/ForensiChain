@@ -297,15 +297,37 @@ Delete
 
 <div class="mt-4 d-flex justify-content-between">
 
+<div class="d-flex gap-2">
+
 <a
 href="/cases"
 class="btn btn-secondary">
 
-<i class="bi bi-arrow-left"></i>
-
-Back to Cases
+⬅ Back to Cases
 
 </a>
+
+<a
+th:href="@{/report/case/{id}(id=${case.id})}"
+class="btn btn-danger">
+
+<i class="bi bi-file-earmark-pdf-fill"></i>
+
+Generate PDF Report
+
+</a>
+
+<a
+th:href="@{/ai/summary/{id}(id=${case.id})}"
+class="btn btn-success">
+
+<i class="bi bi-robot"></i>
+
+Generate AI Summary
+
+</a>
+
+</div>
 
 <a
 href="/dashboard"

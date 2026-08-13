@@ -17,10 +17,16 @@ public class Evidence {
 
     private Integer userId;
 
-    private Integer caseId;
+    @Column(columnDefinition = "LONGTEXT")
+    private String metadata;
+
+    // Relationship with Investigation Case
+    @ManyToOne
+    @JoinColumn(name = "case_id")
+    private InvestigationCase investigationCase;
 
     // ===========================
-    // Metadata
+    // File Metadata
     // ===========================
 
     private Long fileSize;
@@ -28,6 +34,13 @@ public class Evidence {
     private String fileExtension;
 
     private String contentType;
+
+    // ===========================
+    // OCR Extracted Text
+    // ===========================
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String extractedText;
 
     // ===========================
     // Evidence Status
@@ -73,12 +86,12 @@ public class Evidence {
         this.userId = userId;
     }
 
-    public Integer getCaseId() {
-        return caseId;
+    public InvestigationCase getInvestigationCase() {
+        return investigationCase;
     }
 
-    public void setCaseId(Integer caseId) {
-        this.caseId = caseId;
+    public void setInvestigationCase(InvestigationCase investigationCase) {
+        this.investigationCase = investigationCase;
     }
 
     public Long getFileSize() {
@@ -105,6 +118,14 @@ public class Evidence {
         this.contentType = contentType;
     }
 
+    public String getExtractedText() {
+        return extractedText;
+    }
+
+    public void setExtractedText(String extractedText) {
+        this.extractedText = extractedText;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -121,4 +142,11 @@ public class Evidence {
         this.uploadedAt = uploadedAt;
     }
 
+    public String getMetadata() {
+    return metadata;
+}
+
+public void setMetadata(String metadata) {
+    this.metadata = metadata;
+}
 }

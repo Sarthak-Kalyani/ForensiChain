@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "investigation_case")
 public class InvestigationCase {
 
     @Id
@@ -15,20 +16,63 @@ public class InvestigationCase {
 
     private String title;
 
-    @Column(length = 2000)
+    @Column(length = 1000)
     private String description;
 
+    // ==========================
+    // Case Information
+    // ==========================
+
     private String caseType;
+
+    private String investigator;
+
+    private String assignedOfficer;
 
     private String priority;
 
     private String status;
 
-    private String assignedOfficer;
+    // ==========================
+    // Timestamps
+    // ==========================
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
+    private LocalDateTime updatedAt;
+
+    public InvestigationCase() {
+    }
+
+    // ==========================
+    // Lifecycle
+    // ==========================
+
+    @PrePersist
+    public void onCreate() {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        createdAt = now;
+        updatedAt = now;
+
+        if (status == null || status.isBlank()) {
+            status = "OPEN";
+        }
+
+        if (priority == null || priority.isBlank()) {
+            priority = "MEDIUM";
+        }
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+    // ==========================
     // Getters & Setters
+    // ==========================
 
     public Integer getId() {
         return id;
@@ -70,6 +114,22 @@ public class InvestigationCase {
         this.caseType = caseType;
     }
 
+    public String getInvestigator() {
+        return investigator;
+    }
+
+    public void setInvestigator(String investigator) {
+        this.investigator = investigator;
+    }
+
+    public String getAssignedOfficer() {
+        return assignedOfficer;
+    }
+
+    public void setAssignedOfficer(String assignedOfficer) {
+        this.assignedOfficer = assignedOfficer;
+    }
+
     public String getPriority() {
         return priority;
     }
@@ -86,19 +146,19 @@ public class InvestigationCase {
         this.status = status;
     }
 
-    public String getAssignedOfficer() {
-        return assignedOfficer;
-    }
-
-    public void setAssignedOfficer(String assignedOfficer) {
-        this.assignedOfficer = assignedOfficer;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
