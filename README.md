@@ -1,181 +1,115 @@
-# Smart Digital Consent & Evidence Management System
+# ForensiChain
 
-## Secure Consent. Verified Evidence. Trusted Records.
+### AI-Powered Digital Evidence Investigation Platform
 
-The **Smart Digital Consent & Evidence Management System** is a web-based platform designed to replace traditional paper-based and verbal consent methods with a secure digital solution. It enables organizations, hospitals, legal firms, colleges, and businesses to create, manage, verify, and store consent records with complete transparency and security.
+ForensiChain is a digital forensics and evidence management platform designed to securely store, analyze, verify, and investigate digital evidence.
 
-This system ensures that every consent action is recorded with timestamps, secure storage, downloadable proof, and audit logs to prevent disputes, fraud, or loss of records.
-
----
-
-## Problem Statement
-
-Traditional consent systems face many issues:
-
-- Paper forms can be lost or damaged  
-- Verbal consent has no strong proof  
-- Fake or tampered records may occur  
-- Verification takes time  
-- No centralized record management  
-
-Organizations need a modern system that provides trusted and legally verifiable consent records.
-
----
-
-## Proposed Solution
-
-This project provides a smart digital platform where users can:
-
-- Give consent online securely  
-- Accept or reject requests digitally  
-- Store records safely in database  
-- Generate downloadable proof documents  
-- Verify records instantly  
-- Maintain complete audit history  
-
----
+The system maintains evidence integrity using SHA-256 cryptographic hashing and provides forensic analysis, OCR-based content extraction, metadata analysis, chain-of-custody tracking, and AI-assisted investigation summaries.
 
 ## Key Features
 
-### User Module
-- User Registration & Login  
-- Secure Authentication  
-- View Pending Consent Requests  
-- Accept / Reject Consent  
-- View Consent History  
-- Download Proof Records  
+- Digital evidence upload and management
+- SHA-256 evidence integrity verification
+- Tamper detection
+- Forensic metadata extraction
+- OCR-based text extraction
+- Evidence risk assessment
+- Case and investigation management
+- Chain-of-custody tracking
+- Evidence verification and audit logs
+- AI-powered investigation summaries
+- PDF investigation report generation
+- Evidence-to-case relationship tracking
+- Secure MySQL database storage
 
-### Admin / Organization Module
-- Create Consent Requests  
-- Manage Users  
-- View Logs & Reports  
-- Verify Evidence Records  
-- Dashboard Monitoring  
+## Technology Stack
 
-### Security Features
-- Role-Based Access Control  
-- Encrypted Data Storage  
-- Timestamped Records  
-- Secure Session Handling  
-- Database Backup  
+- Java
+- Spring Boot
+- Spring Data JPA
+- MySQL
+- Thymeleaf
+- Bootstrap
+- SHA-256
+- Tesseract OCR
+- Apache PDFBox / OpenPDF
+- Maven
+- AWS RDS
+- AWS EC2
 
-### Evidence Features
-- Unique Consent ID  
-- PDF Record Generation  
-- Verification System  
-- Audit Trail Logs  
+## System Architecture
 
----
+```text
+User
+  |
+  v
+ForensiChain Web Interface
+  |
+  v
+Spring Boot Application
+  |
+  +---- Case Management
+  |
+  +---- Evidence Management
+  |
+  +---- SHA-256 Integrity Verification
+  |
+  +---- OCR & Metadata Analysis
+  |
+  +---- Chain of Custody
+  |
+  +---- AI Investigation Analysis
+  |
+  +---- PDF Report Generation
+  |
+  v
+MySQL Database
+(AWS RDS)
 
-## Tech Stack
+Digital Evidence Workflow
+Upload Evidence
+       |
+       v
+Generate SHA-256 Hash
+       |
+       v
+Store Evidence Metadata
+       |
+       v
+OCR & Forensic Analysis
+       |
+       v
+Risk Assessment
+       |
+       v
+Integrity Verification
+       |
+       v
+Chain of Custody
+       |
+       v
+AI Investigation Summary
+       |
+       v
+Investigation Report
+Security
 
-### Frontend
-- HTML  
-- CSS  
-- JavaScript  
-- Bootstrap  
+ForensiChain uses SHA-256 cryptographic hashing to generate a unique fingerprint for uploaded evidence.
 
-### Backend
-- Java  
-- Spring Boot  
+During verification, the evidence can be re-hashed and compared with its stored fingerprint to detect possible modification or tampering.
 
-### Database
-- MySQL  
+Current Deployment
 
-### Tools Used
-- IntelliJ IDEA / Eclipse  
-- Postman  
-- GitHub  
-- MySQL Workbench  
+The application is being prepared for cloud deployment using:
 
----
+AWS EC2 for application hosting
+AWS RDS for MySQL database hosting
+Project Status
 
-## System Workflow
+The core ForensiChain investigation platform has been implemented, including evidence management, forensic analysis, integrity verification, chain-of-custody tracking, AI investigation summaries, and PDF reporting.
 
-1. User registers and logs in  
-2. Admin creates consent request  
-3. User receives request  
-4. User reviews details  
-5. User accepts or rejects digitally  
-6. System stores secure record  
-7. Timestamp and evidence generated  
-8. Admin can verify anytime  
+Cloud deployment and production configuration are being completed.
 
----
+Author
 
-## Project Modules
-
-- Authentication Module  
-- Consent Management Module  
-- User Dashboard  
-- Admin Dashboard  
-- Evidence Verification Module  
-- Report Generation Module  
-
----
-
-## Real Life Use Cases
-
-### Hospitals
-Patient treatment approvals and procedure consent
-
-### Companies
-Employee agreements and HR policy approvals
-
-### Colleges
-Student declarations and undertaking forms
-
-### Legal Sector
-Contract approvals and consent verification
-
----
-
-## Future Enhancements
-
-- Blockchain-Based Record Security  
-- Face Verification  
-- Aadhaar / eKYC Integration  
-- Mobile App Version  
-- Cloud Deployment  
-- AI Fraud Detection  
-
----
-
-## Benefits
-
-- Saves Time  
-- Reduces Paperwork  
-- Better Transparency  
-- Strong Security  
-- Easy Record Management  
-- Instant Verification  
-
----
-
-## Screenshots
-
-_Add your project screenshots here_
-
----
-
-## Installation Steps
-
-1. Clone the repository
-git clone https://github.com/yourusername/project-name.git
-
-2. Open in IDE
-
-3. Configure MySQL Database
-
-4. Run Spring Boot Application
-5. Open browser and access:
-http://localhost:8080
-
-Developed By
-
-Sarthak Kalyani 
-B.Tech CSE
-
-License
-
-This project is developed for academic and educational purposes.
+Sarthak Kalyani
