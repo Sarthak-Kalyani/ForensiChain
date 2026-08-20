@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -17,109 +18,112 @@
 
     <style>
 
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             min-height: 100vh;
             margin: 0;
+            background: #eef2f7;
             font-family: "Segoe UI", Arial, sans-serif;
-            color: #e2e8f0;
-
-            background:
-                radial-gradient(circle at top left, #1e3a8a 0%, transparent 35%),
-                radial-gradient(circle at bottom right, #0f766e 0%, transparent 35%),
-                #07111f;
+            color: #1f2937;
         }
 
         /* NAVBAR */
 
         .navbar {
-            background: rgba(7, 17, 31, 0.88) !important;
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #111827, #1e3a8a) !important;
+            padding: 16px 0;
         }
 
         .navbar-brand {
-            font-size: 21px;
-            letter-spacing: .5px;
+            font-size: 1.35rem;
+            letter-spacing: .3px;
         }
 
-        .brand-blue {
-            color: #38bdf8;
+        .navbar-subtitle {
+            font-size: .9rem;
+            opacity: .85;
         }
 
         /* MAIN CARD */
 
-        .main-card {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.14);
+        .upload-card {
+            max-width: 900px;
+            margin: 50px auto;
+            border: none;
             border-radius: 18px;
-            backdrop-filter: blur(14px);
-            box-shadow: 0 25px 60px rgba(0,0,0,.4);
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,.10);
         }
 
-        .card-header-custom {
-            padding: 25px 30px;
-            background: linear-gradient(
-                135deg,
-                rgba(2,132,199,.9),
-                rgba(37,99,235,.9)
-            );
-            border-bottom: 1px solid rgba(255,255,255,.12);
+        /* HEADER */
+
+        .upload-header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 28px 30px;
         }
 
-        .card-header-custom h3 {
+        .upload-header h2 {
             margin: 0;
-            font-weight: 600;
+            font-weight: 700;
         }
+
+        .upload-header p {
+            margin: 7px 0 0;
+            opacity: .9;
+        }
+
+        .upload-header-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        /* BODY */
 
         .card-body {
-            padding: 32px;
+            padding: 35px;
+            background: white;
+        }
+
+        /* SECURITY BOX */
+
+        .security-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 28px;
+        }
+
+        .security-box i {
+            font-size: 22px;
+            color: #2563eb;
         }
 
         /* FORM */
 
         .form-label {
             font-weight: 600;
-            color: #dbeafe;
-            margin-bottom: 8px;
+            color: #1f2937;
         }
 
         .form-control,
         .form-select {
-            background: rgba(0,0,0,.25);
-            border: 1px solid rgba(255,255,255,.18);
-            color: white;
             border-radius: 9px;
-            padding: 12px 14px;
+            padding: 11px 13px;
+            border: 1px solid #d1d5db;
         }
 
         .form-control:focus,
         .form-select:focus {
-            background: rgba(0,0,0,.3);
-            color: white;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56,189,248,.12);
-        }
-
-        .form-control::placeholder {
-            color: #7c8798;
-        }
-
-        .form-select option {
-            background: #0f172a;
-            color: white;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.12);
         }
 
         .form-text {
-            color: #94a3b8;
+            color: #6b7280;
             margin-top: 7px;
         }
-
-        /* FILE INPUT */
 
         input[type="file"] {
             cursor: pointer;
@@ -131,88 +135,56 @@
             border-radius: 9px;
             font-weight: 600;
             padding: 11px 18px;
-            border: none;
         }
 
         .btn-upload {
-            background: linear-gradient(135deg, #0284c7, #2563eb);
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
             color: white;
+            border: none;
         }
 
         .btn-upload:hover {
             color: white;
             transform: translateY(-1px);
-            box-shadow: 0 8px 22px rgba(37,99,235,.35);
+            box-shadow: 0 8px 20px rgba(37,99,235,.25);
         }
 
         .btn-dashboard {
-            background: rgba(255,255,255,.1);
-            color: #e2e8f0;
-            border: 1px solid rgba(255,255,255,.15);
-        }
-
-        .btn-dashboard:hover {
-            background: rgba(255,255,255,.16);
-            color: white;
+            border-radius: 9px;
         }
 
         .btn-verify {
-            background: rgba(34,197,94,.15);
-            color: #86efac;
-            border: 1px solid rgba(34,197,94,.3);
-        }
-
-        .btn-verify:hover {
-            background: rgba(34,197,94,.25);
-            color: #bbf7d0;
-        }
-
-        hr {
-            border-color: rgba(255,255,255,.12);
-        }
-
-        /* SECURITY INFO */
-
-        .security-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            padding: 14px 16px;
-            margin-bottom: 28px;
-
-            border-radius: 10px;
-
-            background: rgba(56,189,248,.08);
-            border: 1px solid rgba(56,189,248,.18);
-
-            color: #bae6fd;
-            font-size: 14px;
-        }
-
-        .security-box i {
-            font-size: 20px;
-            color: #38bdf8;
+            border-radius: 9px;
         }
 
         /* FOOTER */
 
         .footer {
             text-align: center;
-            color: #64748b;
-            font-size: 12px;
-            margin-top: 25px;
-            padding-bottom: 25px;
+            color: #6b7280;
+            margin-top: 30px;
+            padding-bottom: 30px;
+            font-size: .9rem;
         }
 
-        @media (max-width: 576px) {
+        /* RESPONSIVE */
 
-            .card-body {
-                padding: 22px;
+        @media (max-width: 768px) {
+
+            .navbar-subtitle {
+                display: none;
             }
 
-            .card-header-custom {
-                padding: 20px;
+            .upload-card {
+                margin: 25px 12px;
+            }
+
+            .card-body {
+                padding: 24px;
+            }
+
+            .upload-header {
+                padding: 24px;
             }
 
         }
@@ -223,56 +195,82 @@
 
 <body>
 
-<!-- NAVBAR -->
 
-<nav class="navbar navbar-dark shadow-sm">
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-dark shadow">
 
     <div class="container">
 
-        <a href="/dashboard"
-           class="navbar-brand text-white text-decoration-none">
+        <a
+            href="/dashboard"
+            class="navbar-brand text-white text-decoration-none">
 
             <i class="bi bi-shield-lock-fill me-2"></i>
 
-            Forensi<span class="brand-blue">Chain</span>
+            <b>ForensiChain</b>
 
         </a>
+
+        <span class="text-light navbar-subtitle">
+
+            AI-Powered Digital Evidence Investigation Platform
+
+        </span>
 
     </div>
 
 </nav>
 
 
-<!-- MAIN -->
+<!-- ================= MAIN ================= -->
 
-<div class="container mt-5 mb-5">
+<div class="container">
 
-    <div class="main-card">
+    <div class="card upload-card">
 
-        <div class="card-header-custom">
 
-            <h3>
-                <i class="bi bi-cloud-arrow-up-fill me-2"></i>
+        <!-- HEADER -->
+
+        <div class="upload-header">
+
+            <i class="bi bi-cloud-arrow-up-fill upload-header-icon"></i>
+
+            <h2>
                 Upload Digital Evidence
-            </h3>
+            </h2>
+
+            <p>
+                Securely register digital evidence for forensic investigation.
+            </p>
 
         </div>
 
 
+        <!-- BODY -->
+
         <div class="card-body">
+
+
+            <!-- SECURITY INFO -->
 
             <div class="security-box">
 
-                <i class="bi bi-shield-check"></i>
+                <i class="bi bi-shield-check me-2"></i>
 
-                <div>
-                    <strong>Secure Evidence Registration</strong><br>
+                <strong>Secure Evidence Registration</strong>
+
+                <div class="small mt-1">
+
                     Your uploaded evidence will be registered and protected
-                    with a cryptographic hash.
+                    using a cryptographic SHA-256 hash.
+
                 </div>
 
             </div>
 
+
+            <!-- FORM -->
 
             <form
                 action="/evidence/upload"
@@ -280,30 +278,7 @@
                 enctype="multipart/form-data">
 
 
-                <!-- USER ID -->
-
-                <div class="mb-4">
-
-                    <label class="form-label">
-                        <i class="bi bi-person me-1"></i>
-                        User ID
-                    </label>
-
-                    <input
-                        class="form-control"
-                        type="number"
-                        name="userId"
-                        min="1"
-                        required>
-
-                    <div class="form-text">
-                        Enter the ID of the user uploading this evidence.
-                    </div>
-
-                </div>
-
-
-                <!-- CASE -->
+                <!-- INVESTIGATION CASE -->
 
                 <div class="mb-4">
 
@@ -333,7 +308,9 @@
                     </select>
 
                     <div class="form-text">
+
                         Select the investigation case associated with this evidence.
+
                     </div>
 
                 </div>
@@ -358,7 +335,9 @@
                         required>
 
                     <div class="form-text">
+
                         Maximum file size: 50 MB.
+
                     </div>
 
                 </div>
@@ -392,7 +371,7 @@
 
                 <a
                     href="/dashboard"
-                    class="btn btn-dashboard me-2">
+                    class="btn btn-primary btn-dashboard me-2">
 
                     <i class="bi bi-speedometer2 me-1"></i>
 
@@ -403,7 +382,7 @@
 
                 <a
                     href="/verifyPage"
-                    class="btn btn-verify">
+                    class="btn btn-outline-success btn-verify">
 
                     <i class="bi bi-shield-check me-1"></i>
 
@@ -418,11 +397,21 @@
     </div>
 
 
+    <!-- FOOTER -->
+
     <div class="footer">
 
         <i class="bi bi-shield-lock me-1"></i>
 
-        ForensiChain • Secure • Traceable • Verifiable
+        <strong>ForensiChain</strong>
+
+        <br>
+
+        Secure • Traceable • Verifiable
+
+        <br>
+
+        © 2026 ForensiChain
 
     </div>
 
