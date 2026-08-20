@@ -36,7 +36,6 @@
 ## System Architecture
 
 
-```text
                          USER
                            |
                            v
@@ -87,7 +86,7 @@
 
 ## Digital Evidence Workflow
 
-```text
+
 Upload Evidence
        |
        v
