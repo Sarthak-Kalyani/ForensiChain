@@ -12,8 +12,6 @@ import com.sdcems.sdcems.service.HashService;
 import com.sdcems.sdcems.service.MetadataService;
 import com.sdcems.sdcems.service.OCRService;
 
-import com.sdcems.sdcems.service.MetadataService;
-
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.core.io.FileSystemResource;
@@ -24,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +32,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/evidence")
 public class EvidenceController {
 
@@ -81,6 +80,7 @@ public class EvidenceController {
     // ==========================================
 
     @PostMapping("/upload")
+    @ResponseBody
     public String upload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("caseId") int caseId,
@@ -614,106 +614,108 @@ public class EvidenceController {
 
 
     // ==========================================
-    // VERIFY EVIDENCE
-    // ==========================================
+// VERIFY EVIDENCE
+// ==========================================
 
-    @GetMapping("/verify/{id}")
-    public String verify(
-            @PathVariable Integer id,
-            HttpSession session) {
+@GetMapping("/verify/{id}")
+public String verify(
+        @PathVariable Integer id,
+        HttpSession session,
+        org.springframework.ui.Model model) {
 
-        try {
+    try {
 
-            Integer userId =
-                    getLoggedInUserId(session);
+        Integer userId = getLoggedInUserId(session);
 
-            if (userId == null) {
+        if (userId == null) {
+            model.addAttribute("error", "ACCESS DENIED - Please login");
+            return "verify-result";
+        }
 
-                return "ACCESS DENIED - Please login";
-            }
+        Evidence evidence = repo.findById(id).orElseThrow();
 
-            Evidence evidence =
-                    repo.findById(id)
-                            .orElseThrow();
+        // Ownership check
+        if (!evidence.getUserId().equals(userId)) {
+            model.addAttribute("error", "ACCESS DENIED - Not Owner");
+            return "verify-result";
+        }
 
-            // Ownership check
+        // Deleted evidence cannot be verified
+        if ("DELETED".equalsIgnoreCase(evidence.getStatus())) {
+            model.addAttribute("error", "EVIDENCE DELETED");
+            return "verify-result";
+        }
 
-            if (!evidence.getUserId()
-                    .equals(userId)) {
+        // Locate physical file
+        Path filePath = Paths.get(
+                System.getProperty("user.dir"),
+                "uploads",
+                evidence.getFileName()
+        );
 
-                return "ACCESS DENIED - Not Owner";
-            }
+        File file = filePath.toFile();
 
-            // Deleted evidence cannot be verified
+        if (!file.exists()) {
+            model.addAttribute("error", "FILE MISSING");
+            return "verify-result";
+        }
 
-            if ("DELETED".equalsIgnoreCase(
-                    evidence.getStatus())) {
+        // Generate current SHA-256
+        String newHash;
 
-                return "EVIDENCE DELETED";
-            }
+        try (FileInputStream inputStream =
+                     new FileInputStream(file)) {
 
-            // Locate physical file
+            newHash = HashService.generateFileHash(inputStream);
+        }
 
-            Path filePath =
-                    Paths.get(
-                            System.getProperty("user.dir"),
-                            "uploads",
-                            evidence.getFileName()
-                    );
+        // Audit verification
+        AuditLog log = new AuditLog();
 
-            File file =
-                    filePath.toFile();
+        log.setUserId(userId);
+        log.setEvidenceId(evidence.getId());
+        log.setAction("VERIFY");
 
-            if (!file.exists()) {
+        auditRepo.save(log);
 
-                return "FILE MISSING";
-            }
+        // Send information to HTML
+        model.addAttribute("fileName", evidence.getFileName());
+        model.addAttribute("evidenceId", evidence.getId());
+        model.addAttribute("originalHash", evidence.getHashValue());
+        model.addAttribute("currentHash", newHash);
 
-            // Generate current SHA-256
+        // Compare hashes
+        if (newHash.equals(evidence.getHashValue())) {
 
-            String newHash;
-
-            try (FileInputStream inputStream =
-                         new FileInputStream(file)) {
-
-                newHash =
-                        HashService.generateFileHash(
-                                inputStream
-                        );
-            }
-
-            // Audit verification
-
-            AuditLog log =
-                    new AuditLog();
-
-            log.setUserId(userId);
-
-            log.setEvidenceId(
-                    evidence.getId()
+            model.addAttribute("valid", true);
+            model.addAttribute(
+                    "message",
+                    "VALID - File Not Modified"
             );
 
-            log.setAction("VERIFY");
+        } else {
 
-            auditRepo.save(log);
-
-            // Compare hashes
-
-            if (newHash.equals(
-                    evidence.getHashValue())) {
-
-                return "VALID - File Not Modified";
-            }
-
-            return "TAMPERED - File Changed";
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-            return "ERROR VERIFYING FILE";
+            model.addAttribute("valid", false);
+            model.addAttribute(
+                    "message",
+                    "TAMPERED - File Changed"
+            );
         }
+
+        return "verify-result";
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        model.addAttribute(
+                "error",
+                "ERROR VERIFYING FILE"
+        );
+
+        return "verify-result";
     }
+}
 
 
     // ==========================================
@@ -825,6 +827,7 @@ public class EvidenceController {
     // ==========================================
 
     @GetMapping("/delete/{id}")
+    @ResponseBody
     public String deleteEvidence(
             @PathVariable Integer id,
             HttpSession session) {
