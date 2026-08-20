@@ -1,166 +1,157 @@
-ForensiChain
+# ForensiChain
 
-AI-Powered Digital Evidence Investigation Platform
 
-ForensiChain is a digital forensics and evidence management platform designed to help investigators securely collect, manage, analyze, verify, and report digital evidence.
+### Digital Forensics & Security
 
-The system combines Spring Boot, MySQL, Digital Forensics, Cybersecurity, OCR, AI-assisted investigation analysis, and AWS deployment into a single investigation workflow.
 
-TECHNOLOGY STACK
+- SHA-256
+- Tesseract OCR
+- Forensic metadata extraction
+- Chain of custody
+- Audit logging
+- Evidence integrity verification
+- Tamper detection
 
-Backend
 
-Java
-Spring Boot
-Spring MVC
-Spring Data JPA
-Maven
+### Reporting & Analysis
 
-Frontend
 
-HTML
-CSS
-Thymeleaf
-Bootstrap
-Bootstrap Icons
-JavaScript
+- Apache PDFBox / OpenPDF
+- AI Investigation Analysis
+- Automated Investigation Summaries
 
-Database
 
-MySQL
-AWS RDS
+### Cloud & Deployment
 
-Digital Forensics & Security
 
-SHA-256
-Tesseract OCR
-Forensic metadata extraction
-Chain of custody
-Audit logging
-Evidence integrity verification
-Tamper detection
+- AWS EC2
+- AWS RDS
+- Linux
+- AWS Cloud Infrastructure
 
-Reporting & Analysis
 
-Apache PDFBox / OpenPDF
-AI Investigation Analysis
-Automated Investigation Summaries
+---
 
-Cloud & Deployment
 
-AWS EC2
-AWS RDS
-Linux
-AWS Cloud Infrastructure
+## System Architecture
 
-SYSTEM ARCHITECTURE
 
-USER
-|
-v
-ForensiChain Web UI
-Thymeleaf + Bootstrap
-|
-v
-Spring Boot API
-|
-+-------------------+-------------------+
-| | |
-v v v
-Case Management Evidence Management Authentication
-|
-v
-Digital Forensics
-|
-+-----------+-----------+
-| | |
-v v v
-SHA-256 OCR Metadata Extraction
-|
-v
-Risk Assessment
-|
-+-----------+-----------+
-| |
-v v
-Chain of Custody AI Analysis
-& Audit Logs & Summaries
-| |
-+-----------+-----------+
-|
-v
-MySQL Database
-AWS RDS
-|
-v
-Evidence Files
-AWS EC2
+```text
+                         USER
+                           |
+                           v
+              +-------------------------+
+              |    ForensiChain Web UI  |
+              |   Thymeleaf + Bootstrap |
+              +------------+------------+
+                           |
+                           v
+              +-------------------------+
+              |     Spring Boot API     |
+              +------------+------------+
+                           |
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+   Case Management   Evidence Management   Authentication
+                           |
+                           v
+              +-------------------------+
+              |    Digital Forensics    |
+              |                         |
+              |  SHA-256 Hashing        |
+              |  OCR                    |
+              |  Metadata Extraction    |
+              |  Risk Assessment        |
+              +------------+------------+
+                           |
+              +------------+------------+
+              |                         |
+              v                         v
+       Chain of Custody           AI Analysis
+       & Audit Logs              & Summaries
+              |                         |
+              +------------+------------+
+                           |
+                           v
+              +-------------------------+
+              |      MySQL Database     |
+              |        AWS RDS          |
+              +------------+------------+
+                           |
+                           v
+              +-------------------------+
+              |      Evidence Files     |
+              |       AWS EC2           |
+              +-------------------------+
 
-DIGITAL EVIDENCE WORKFLOW
+## Digital Evidence Workflow
 
+```text
 Upload Evidence
-|
-v
+       |
+       v
 Validate Evidence File
-|
-v
+       |
+       v
 Generate SHA-256 Hash
-|
-v
+       |
+       v
 Store Evidence Metadata
-|
-+--------------------+
-| |
-v v
-OCR Forensic Metadata
-| |
-+---------+----------+
-|
-v
-Risk Assessment
-|
-v
-Store Evidence Record
-|
-v
-Chain of Custody
-|
-v
-Integrity Verification
-|
-+----+----+
-| |
-v v
-VALID TAMPERED
-| |
-+----+----+
-|
-v
-AI Investigation Analysis
-|
-v
-PDF Investigation Report
+       |
+       +--------------------+
+       |                    |
+       v                    v
+      OCR          Forensic Metadata
+       |                    |
+       +---------+----------+
+                 |
+                 v
+          Risk Assessment
+                 |
+                 v
+        Store Evidence Record
+                 |
+                 v
+        Chain of Custody
+                 |
+                 v
+       Integrity Verification
+                 |
+          +------+------+
+          |             |
+          v             v
+        VALID        TAMPERED
+          |             |
+          +------+------+
+                 |
+                 v
+       AI Investigation Analysis
+                 |
+                 v
+       PDF Investigation Report
 
-EVIDENCE INTEGRITY
+
+## Evidence Integrity
 
 ForensiChain uses SHA-256 cryptographic hashing to generate a unique fingerprint for every uploaded evidence file.
 
 When evidence is uploaded:
 
 Evidence File
-|
-v
+     |
+     v
 SHA-256 Hash
-|
-v
+     |
+     v
 Stored with Evidence Record
 
 During verification, the physical evidence file is hashed again.
 
 Stored SHA-256
-|
-| Compare
-v
+      |
+      | Compare
+      v
 Current SHA-256
 
 If both hashes match:
@@ -173,31 +164,30 @@ TAMPERED - File Changed
 
 This provides a mechanism for detecting modifications to registered digital evidence.
 
-OCR ANALYSIS
+## OCR Analysis
 
 For supported image evidence, ForensiChain uses Tesseract OCR to automatically extract readable text.
 
 The extracted content is stored with the evidence record and displayed in the evidence details page.
 
-Example workflow:
-
+Example Workflow
 Image Evidence
-|
-v
+      |
+      v
 Tesseract OCR
-|
-v
+      |
+      v
 Extracted Text
-|
-v
+      |
+      v
 Stored with Evidence
-|
-v
+      |
+      v
 Available for Investigation Analysis
 
 The OCR engine is configured for the AWS EC2 Linux environment using the installed Tesseract language data.
 
-FORENSIC METADATA
+## Forensic Metadata
 
 ForensiChain extracts forensic metadata from uploaded evidence.
 
@@ -216,7 +206,7 @@ Other available forensic metadata
 
 This information helps investigators understand the characteristics of the original evidence.
 
-CHAIN OF CUSTODY
+## Chain of Custody
 
 ForensiChain maintains an audit trail of important evidence-related actions.
 
@@ -236,7 +226,7 @@ Action performed
 
 This provides a historical record of evidence activity.
 
-INVESTIGATION MANAGEMENT
+## Investigation Management
 
 Evidence is associated with investigation cases.
 
@@ -254,7 +244,7 @@ Evidence records
 
 This allows investigators to organize digital evidence according to individual investigations.
 
-AI INVESTIGATION ANALYSIS
+AI Investigation Analysis
 
 ForensiChain includes AI-assisted investigation analysis using available evidence information such as:
 
@@ -266,7 +256,7 @@ Investigation context
 
 The analysis can assist investigators by generating structured investigation summaries and identifying useful information from collected evidence.
 
-PDF INVESTIGATION REPORTS
+PDF Investigation Reports
 
 ForensiChain supports generation of investigation reports in PDF format.
 
@@ -279,8 +269,7 @@ Integrity information
 OCR results
 Security analysis
 Investigation findings
-
-SECURITY
+Security
 
 ForensiChain applies multiple security mechanisms to protect evidence and investigation data.
 
@@ -304,25 +293,24 @@ Audit Logging
 
 Important evidence operations are recorded for investigation traceability.
 
-CLOUD DEPLOYMENT
+Cloud Deployment
 
 ForensiChain is deployed on AWS using:
 
-Internet
-|
-v
-AWS EC2 Instance
-|
-v
-Spring Boot App
-Port 8080
-|
-+-------------------+
-| |
-v v
-AWS RDS MySQL Evidence Storage
-on EC2
-
+                    Internet
+                       |
+                       v
+                AWS EC2 Instance
+                       |
+                       v
+                Spring Boot App
+                   Port 8080
+                       |
+             +---------+---------+
+             |                   |
+             v                   v
+        AWS RDS MySQL      Evidence Storage
+                              on EC2
 Application Server
 
 AWS EC2 hosts the Spring Boot application.
@@ -337,24 +325,23 @@ http://43.204.140.81:8080
 
 The current deployment uses the EC2 public IP address. A domain name and HTTPS configuration can be added for production deployment.
 
-PROJECT STRUCTURE
-
+Project Structure
 ForensiChain/
-|
+│
 ├── src/
-│ └── main/
-│ ├── java/
-│ │ └── com/
-│ │ └── sdcems/
-│ │ └── sdcems/
-│ │ ├── controller/
-│ │ ├── model/
-│ │ ├── repository/
-│ │ └── service/
-│ │
-│ └── resources/
-│ ├── templates/
-│ └── application.properties
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── sdcems/
+│       │           └── sdcems/
+│       │               ├── controller/
+│       │               ├── model/
+│       │               ├── repository/
+│       │               └── service/
+│       │
+│       └── resources/
+│           ├── templates/
+│           └── application.properties
 │
 ├── uploads/
 │
@@ -362,41 +349,39 @@ ForensiChain/
 ├── mvnw
 ├── mvnw.cmd
 └── README.md
-
-MAIN APPLICATION MODULES
-
+Main Application Modules
 Authentication
-|
-v
+     |
+     v
 Dashboard
-|
-+---- Investigation Cases
-|
-+---- Evidence Upload
-|
-+---- Evidence Details
-|
-+---- OCR
-|
-+---- Metadata Analysis
-|
-+---- Integrity Verification
-|
-+---- Chain of Custody
-|
-+---- AI Analysis
-|
-+---- PDF Reports
-
-EXAMPLE EVIDENCE VERIFICATION
+     |
+     +---- Investigation Cases
+     |
+     +---- Evidence Upload
+     |
+     +---- Evidence Details
+     |
+     +---- OCR
+     |
+     +---- Metadata Analysis
+     |
+     +---- Integrity Verification
+     |
+     +---- Chain of Custody
+     |
+     +---- AI Analysis
+     |
+     +---- PDF Reports
+Example Evidence Verification
 
 After uploading evidence, ForensiChain generates a SHA-256 fingerprint.
 
-Example:
-
+Example
 Evidence ID: 3
 
+
 Original SHA-256:
+
 
 ef5f7e3298c7a3f0fa342a2faf2da64aa1af7163fa31edcdc29a180d31297e69
 
@@ -409,33 +394,30 @@ VALID - File Not Modified
 If the file has been modified:
 
 TAMPERED - File Changed
-
-CURRENT PROJECT STATUS
+Current Project Status
 
 The core ForensiChain investigation platform has been implemented.
 
-Completed:
-
-User authentication
-Investigation case management
-Digital evidence upload
-Evidence storage
-SHA-256 hashing
-Integrity verification
-Tamper detection logic
-Forensic metadata extraction
-Tesseract OCR
-Evidence details
-Chain-of-custody tracking
-Audit logging
-Evidence download
-Soft deletion
-AI investigation analysis
-PDF report generation
-AWS EC2 deployment
-AWS RDS MySQL integration
-
-CURRENT TESTING
+Completed
+ User authentication
+ Investigation case management
+ Digital evidence upload
+ Evidence storage
+ SHA-256 hashing
+ Integrity verification
+ Tamper detection logic
+ Forensic metadata extraction
+ Tesseract OCR
+ Evidence details
+ Chain-of-custody tracking
+ Audit logging
+ Evidence download
+ Soft deletion
+ AI investigation analysis
+ PDF report generation
+ AWS EC2 deployment
+ AWS RDS MySQL integration
+Current Testing
 
 The application is currently undergoing final end-to-end testing, including:
 
@@ -446,8 +428,7 @@ Deleted evidence testing
 Multiple file-type testing
 OCR testing
 Investigation workflow testing
-
-FUTURE ENHANCEMENTS
+Future Enhancements
 
 Potential production improvements include:
 
@@ -461,8 +442,7 @@ Advanced AI investigation capabilities
 Real-time security monitoring
 Advanced evidence correlation
 CloudWatch monitoring and logging
-
-AUTHOR
+Author
 
 Sarthak Kalyani
 
