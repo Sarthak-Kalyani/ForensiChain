@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,31 +17,204 @@
 
     <style>
 
-        body {
-            background: #eef2f7;
-            font-family: "Segoe UI", Arial, sans-serif;
+        * {
+            box-sizing: border-box;
         }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #e2e8f0;
+
+            background:
+                radial-gradient(circle at top left, #1e3a8a 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0f766e 0%, transparent 35%),
+                #07111f;
+        }
+
+        /* NAVBAR */
 
         .navbar {
-            background: linear-gradient(135deg, #111827, #1e3a8a) !important;
+            background: rgba(7, 17, 31, 0.88) !important;
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .card {
-            border: none;
-            border-radius: 15px;
+        .navbar-brand {
+            font-size: 21px;
+            letter-spacing: .5px;
+        }
+
+        .brand-blue {
+            color: #38bdf8;
+        }
+
+        /* MAIN CARD */
+
+        .main-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 18px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 25px 60px rgba(0,0,0,.4);
             overflow: hidden;
         }
 
-        .card-header {
-            padding: 18px 20px;
+        .card-header-custom {
+            padding: 25px 30px;
+            background: linear-gradient(
+                135deg,
+                rgba(2,132,199,.9),
+                rgba(37,99,235,.9)
+            );
+            border-bottom: 1px solid rgba(255,255,255,.12);
         }
 
-        .form-label {
+        .card-header-custom h3 {
+            margin: 0;
             font-weight: 600;
         }
 
+        .card-body {
+            padding: 32px;
+        }
+
+        /* FORM */
+
+        .form-label {
+            font-weight: 600;
+            color: #dbeafe;
+            margin-bottom: 8px;
+        }
+
+        .form-control,
+        .form-select {
+            background: rgba(0,0,0,.25);
+            border: 1px solid rgba(255,255,255,.18);
+            color: white;
+            border-radius: 9px;
+            padding: 12px 14px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: rgba(0,0,0,.3);
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56,189,248,.12);
+        }
+
+        .form-control::placeholder {
+            color: #7c8798;
+        }
+
+        .form-select option {
+            background: #0f172a;
+            color: white;
+        }
+
+        .form-text {
+            color: #94a3b8;
+            margin-top: 7px;
+        }
+
+        /* FILE INPUT */
+
+        input[type="file"] {
+            cursor: pointer;
+        }
+
+        /* BUTTONS */
+
         .btn {
-            border-radius: 8px;
+            border-radius: 9px;
+            font-weight: 600;
+            padding: 11px 18px;
+            border: none;
+        }
+
+        .btn-upload {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+        }
+
+        .btn-upload:hover {
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 22px rgba(37,99,235,.35);
+        }
+
+        .btn-dashboard {
+            background: rgba(255,255,255,.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255,255,255,.15);
+        }
+
+        .btn-dashboard:hover {
+            background: rgba(255,255,255,.16);
+            color: white;
+        }
+
+        .btn-verify {
+            background: rgba(34,197,94,.15);
+            color: #86efac;
+            border: 1px solid rgba(34,197,94,.3);
+        }
+
+        .btn-verify:hover {
+            background: rgba(34,197,94,.25);
+            color: #bbf7d0;
+        }
+
+        hr {
+            border-color: rgba(255,255,255,.12);
+        }
+
+        /* SECURITY INFO */
+
+        .security-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 14px 16px;
+            margin-bottom: 28px;
+
+            border-radius: 10px;
+
+            background: rgba(56,189,248,.08);
+            border: 1px solid rgba(56,189,248,.18);
+
+            color: #bae6fd;
+            font-size: 14px;
+        }
+
+        .security-box i {
+            font-size: 20px;
+            color: #38bdf8;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 25px;
+            padding-bottom: 25px;
+        }
+
+        @media (max-width: 576px) {
+
+            .card-body {
+                padding: 22px;
+            }
+
+            .card-header-custom {
+                padding: 20px;
+            }
+
         }
 
     </style>
@@ -51,19 +223,18 @@
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+<!-- NAVBAR -->
 
-<nav class="navbar navbar-dark shadow">
+<nav class="navbar navbar-dark shadow-sm">
 
     <div class="container">
 
-        <a
-            href="/dashboard"
-            class="navbar-brand text-white text-decoration-none">
+        <a href="/dashboard"
+           class="navbar-brand text-white text-decoration-none">
 
             <i class="bi bi-shield-lock-fill me-2"></i>
 
-            <b>ForensiChain</b>
+            Forensi<span class="brand-blue">Chain</span>
 
         </a>
 
@@ -72,26 +243,36 @@
 </nav>
 
 
-<!-- ================= MAIN ================= -->
+<!-- MAIN -->
 
 <div class="container mt-5 mb-5">
 
-    <div class="card shadow">
+    <div class="main-card">
 
-        <div class="card-header bg-primary text-white">
+        <div class="card-header-custom">
 
-            <h3 class="mb-0">
-
-                <i class="bi bi-upload me-2"></i>
-
+            <h3>
+                <i class="bi bi-cloud-arrow-up-fill me-2"></i>
                 Upload Digital Evidence
-
             </h3>
 
         </div>
 
 
-        <div class="card-body p-4">
+        <div class="card-body">
+
+            <div class="security-box">
+
+                <i class="bi bi-shield-check"></i>
+
+                <div>
+                    <strong>Secure Evidence Registration</strong><br>
+                    Your uploaded evidence will be registered and protected
+                    with a cryptographic hash.
+                </div>
+
+            </div>
+
 
             <form
                 action="/evidence/upload"
@@ -101,9 +282,10 @@
 
                 <!-- USER ID -->
 
-                <div class="mb-3">
+                <div class="mb-4">
 
                     <label class="form-label">
+                        <i class="bi bi-person me-1"></i>
                         User ID
                     </label>
 
@@ -121,11 +303,13 @@
                 </div>
 
 
-                <!-- INVESTIGATION CASE -->
+                <!-- CASE -->
 
-                <div class="mb-3">
+                <div class="mb-4">
 
                     <label class="form-label">
+
+                        <i class="bi bi-folder2-open me-1"></i>
 
                         Investigation Case
 
@@ -137,7 +321,7 @@
                         required>
 
                         <option value="">
-                            Select Case
+                            Select Investigation Case
                         </option>
 
                         <option
@@ -161,7 +345,9 @@
 
                     <label class="form-label">
 
-                        Choose Evidence
+                        <i class="bi bi-file-earmark me-1"></i>
+
+                        Evidence File
 
                     </label>
 
@@ -172,7 +358,7 @@
                         required>
 
                     <div class="form-text">
-                        Upload the original evidence file.
+                        Maximum file size: 50 MB.
                     </div>
 
                 </div>
@@ -184,11 +370,11 @@
 
                     <button
                         type="submit"
-                        class="btn btn-success btn-lg">
+                        class="btn btn-upload btn-lg">
 
                         <i class="bi bi-cloud-upload me-2"></i>
 
-                        Upload Evidence
+                        Register Evidence
 
                     </button>
 
@@ -206,7 +392,7 @@
 
                 <a
                     href="/dashboard"
-                    class="btn btn-primary me-2">
+                    class="btn btn-dashboard me-2">
 
                     <i class="bi bi-speedometer2 me-1"></i>
 
@@ -217,7 +403,7 @@
 
                 <a
                     href="/verifyPage"
-                    class="btn btn-warning">
+                    class="btn btn-verify">
 
                     <i class="bi bi-shield-check me-1"></i>
 
@@ -228,6 +414,15 @@
             </div>
 
         </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        <i class="bi bi-shield-lock me-1"></i>
+
+        ForensiChain • Secure • Traceable • Verifiable
 
     </div>
 

@@ -42,7 +42,7 @@ public class AuthController {
         return "Wrong password";
 
     session.setAttribute("userId", existing.get().getId());
+    return "redirect:/uploadPage";
 
-    return "<h3>Login Successful</h3><a href='/uploadPage'>Go to Upload</a>";
     }
 }
